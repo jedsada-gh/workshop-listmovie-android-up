@@ -1,14 +1,13 @@
-package com.jedsada.listmovieworkshopup.complete.adapter;
+package com.jedsada.listmovieworkshopup.complete.ui.main.adapter;
 
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jedsada.listmovieworkshopup.R;
 import com.jedsada.listmovieworkshopup.complete.CustomImageView;
+import com.jedsada.listmovieworkshopup.complete.ImageLoader;
+import com.jedsada.listmovieworkshopup.complete.StringUtils;
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
 
 class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -38,17 +37,8 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(android.R.color.darker_gray)
-                .error(android.R.color.darker_gray)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-
-        Glide.with(itemView.getContext())
-                .setDefaultRequestOptions(requestOptions)
-                .load(String.format("http://image.tmdb.org/t/p/w780/%s", movieDetailModel.getBackdropPath()))
-                .into(imgCover);
-
+        ImageLoader.loadImageUrl(movieDetailModel.getBackdropPath(), imgCover);
         tvName.setText(movieDetailModel.getTitle());
-        tvDes.setText(String.format("Overview : %s", movieDetailModel.getOverview()));
+        tvDes.setText(StringUtils.getStringOverview(movieDetailModel.getOverview()));
     }
 }

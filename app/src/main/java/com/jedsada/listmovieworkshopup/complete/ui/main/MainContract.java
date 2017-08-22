@@ -1,4 +1,4 @@
-package com.jedsada.listmovieworkshopup.complete;
+package com.jedsada.listmovieworkshopup.complete.ui.main;
 
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
 

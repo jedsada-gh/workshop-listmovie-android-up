@@ -1,4 +1,4 @@
-package com.jedsada.listmovieworkshopup.complete.adapter;
+package com.jedsada.listmovieworkshopup.complete.ui.main.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

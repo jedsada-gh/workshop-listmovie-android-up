@@ -1,5 +1,6 @@
-package com.jedsada.listmovieworkshopup.complete;
+package com.jedsada.listmovieworkshopup.complete.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -8,9 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.jedsada.listmovieworkshopup.R;
-import com.jedsada.listmovieworkshopup.complete.adapter.MovieAdapter;
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
 import com.jedsada.listmovieworkshopup.complete.retrofit.MovieRepository;
+import com.jedsada.listmovieworkshopup.complete.ui.detail.DetailMovieActivity;
+import com.jedsada.listmovieworkshopup.complete.ui.main.adapter.MovieAdapter;
 
 import java.util.List;
 
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
 
     @Override
     public void movieItemClick(MovieDetailModel model) {
-        // navigate to DetailActivity
+        Intent intent = new Intent(this, DetailMovieActivity.class);
+        intent.putExtra(DetailMovieActivity.KEY_MODEL, model);
+        startActivity(intent);
     }
 }

@@ -1,10 +1,13 @@
 package com.jedsada.listmovieworkshopup.complete.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MovieDetailModel {
+public class MovieDetailModel implements Parcelable {
 
     @SerializedName("adult")
     private Boolean mAdult;
@@ -34,6 +37,28 @@ public class MovieDetailModel {
     private Double mVoteAverage;
     @SerializedName("vote_count")
     private Long mVoteCount;
+
+    private MovieDetailModel(Parcel in) {
+        mBackdropPath = in.readString();
+        mOriginalLanguage = in.readString();
+        mOriginalTitle = in.readString();
+        mOverview = in.readString();
+        mPosterPath = in.readString();
+        mReleaseDate = in.readString();
+        mTitle = in.readString();
+    }
+
+    public static final Creator<MovieDetailModel> CREATOR = new Creator<MovieDetailModel>() {
+        @Override
+        public MovieDetailModel createFromParcel(Parcel in) {
+            return new MovieDetailModel(in);
+        }
+
+        @Override
+        public MovieDetailModel[] newArray(int size) {
+            return new MovieDetailModel[size];
+        }
+    };
 
     public Boolean getAdult() {
         return mAdult;
@@ -154,12 +179,14 @@ public class MovieDetailModel {
 
         MovieDetailModel movieDetailModel = (MovieDetailModel) o;
 
-        if (mAdult != null ? !mAdult.equals(movieDetailModel.mAdult) : movieDetailModel.mAdult != null) return false;
+        if (mAdult != null ? !mAdult.equals(movieDetailModel.mAdult) : movieDetailModel.mAdult != null)
+            return false;
         if (mBackdropPath != null ? !mBackdropPath.equals(movieDetailModel.mBackdropPath) : movieDetailModel.mBackdropPath != null)
             return false;
         if (mGenreIds != null ? !mGenreIds.equals(movieDetailModel.mGenreIds) : movieDetailModel.mGenreIds != null)
             return false;
-        if (mId != null ? !mId.equals(movieDetailModel.mId) : movieDetailModel.mId != null) return false;
+        if (mId != null ? !mId.equals(movieDetailModel.mId) : movieDetailModel.mId != null)
+            return false;
         if (mOriginalLanguage != null ? !mOriginalLanguage.equals(movieDetailModel.mOriginalLanguage) : movieDetailModel.mOriginalLanguage != null)
             return false;
         if (mOriginalTitle != null ? !mOriginalTitle.equals(movieDetailModel.mOriginalTitle) : movieDetailModel.mOriginalTitle != null)
@@ -172,8 +199,10 @@ public class MovieDetailModel {
             return false;
         if (mReleaseDate != null ? !mReleaseDate.equals(movieDetailModel.mReleaseDate) : movieDetailModel.mReleaseDate != null)
             return false;
-        if (mTitle != null ? !mTitle.equals(movieDetailModel.mTitle) : movieDetailModel.mTitle != null) return false;
-        if (mVideo != null ? !mVideo.equals(movieDetailModel.mVideo) : movieDetailModel.mVideo != null) return false;
+        if (mTitle != null ? !mTitle.equals(movieDetailModel.mTitle) : movieDetailModel.mTitle != null)
+            return false;
+        if (mVideo != null ? !mVideo.equals(movieDetailModel.mVideo) : movieDetailModel.mVideo != null)
+            return false;
         if (mVoteAverage != null ? !mVoteAverage.equals(movieDetailModel.mVoteAverage) : movieDetailModel.mVoteAverage != null)
             return false;
         return mVoteCount != null ? mVoteCount.equals(movieDetailModel.mVoteCount) : movieDetailModel.mVoteCount == null;
@@ -217,5 +246,21 @@ public class MovieDetailModel {
                 ", mVoteAverage=" + mVoteAverage +
                 ", mVoteCount=" + mVoteCount +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mBackdropPath);
+        parcel.writeString(mOriginalLanguage);
+        parcel.writeString(mOriginalTitle);
+        parcel.writeString(mOverview);
+        parcel.writeString(mPosterPath);
+        parcel.writeString(mReleaseDate);
+        parcel.writeString(mTitle);
     }
 }
