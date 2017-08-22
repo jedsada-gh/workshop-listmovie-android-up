@@ -1,6 +1,7 @@
 package com.jedsada.listmovieworkshopup.complete.ui.main;
 
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
+import com.jedsada.listmovieworkshopup.complete.model.MovieModel;
 import com.jedsada.listmovieworkshopup.complete.retrofit.MovieRepository;
 
 import java.util.List;
@@ -19,8 +20,8 @@ class MainController implements MainContract.MainControllerable {
     public void loadListMovie() {
         movieRepository.requestListMovie(new MovieRepository.MovieRepositoryCallback() {
             @Override
-            public void loadMovieSuccess(List<MovieDetailModel> list) {
-                view.loadListMovieSuccess(list);
+            public void loadMovieSuccess(MovieModel model) {
+                view.loadListMovieSuccess(model);
             }
 
             @Override

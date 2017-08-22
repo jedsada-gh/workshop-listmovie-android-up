@@ -2,10 +2,7 @@ package com.jedsada.listmovieworkshopup.complete.retrofit;
 
 import android.support.annotation.NonNull;
 
-import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
 import com.jedsada.listmovieworkshopup.complete.model.MovieModel;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,7 +12,7 @@ public class MovieRepository {
 
     public interface MovieRepositoryCallback {
 
-        void loadMovieSuccess(List<MovieDetailModel> list);
+        void loadMovieSuccess(MovieModel model);
 
         void loadMovieError(String message);
     }
@@ -26,7 +23,7 @@ public class MovieRepository {
                 @Override
                 public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
                     if (response.isSuccessful()) {
-                        callback.loadMovieSuccess(response.body().getResults());
+                        callback.loadMovieSuccess(response.body());
                     } else {
                         callback.loadMovieError(response.message());
                     }

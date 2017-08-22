@@ -6,9 +6,7 @@ import android.view.ViewGroup;
 
 import com.jedsada.listmovieworkshopup.R;
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.jedsada.listmovieworkshopup.complete.model.MovieModel;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> implements MovieViewHolder.MovieItemListener {
 
@@ -17,11 +15,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> implemen
     }
 
     private MovieAdapterListener listener;
-    private List<MovieDetailModel> list = new ArrayList<>();
+    private MovieModel model = null;
 
-    public void setListMovie(List<MovieDetailModel> newList) {
-        list = newList;
+    public void setData(MovieModel model) {
+        this.model = model;
         notifyDataSetChanged();
+    }
+
+    public MovieModel getData() {
+        return model;
     }
 
     public void setListener(MovieAdapterListener listener) {
@@ -36,16 +38,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> implemen
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.onBindData(list.get(position), this);
+        holder.onBindData(model.getResults().get(position), this);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return model == null ? 0 : model.getResults().size();
     }
 
     @Override
     public void movieItemClick(int position) {
-        if (listener != null) listener.movieItemClick(list.get(position));
+        if (listener != null) listener.movieItemClick(model.getResults().get(position));
     }
 }

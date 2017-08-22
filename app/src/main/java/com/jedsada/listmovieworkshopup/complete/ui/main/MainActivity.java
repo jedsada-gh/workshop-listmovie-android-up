@@ -10,20 +10,20 @@ import android.view.View;
 
 import com.jedsada.listmovieworkshopup.R;
 import com.jedsada.listmovieworkshopup.complete.model.MovieDetailModel;
+import com.jedsada.listmovieworkshopup.complete.model.MovieModel;
 import com.jedsada.listmovieworkshopup.complete.retrofit.MovieRepository;
 import com.jedsada.listmovieworkshopup.complete.ui.detail.DetailMovieActivity;
 import com.jedsada.listmovieworkshopup.complete.ui.main.adapter.MovieAdapter;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements MainContract.MainView,
         MovieAdapter.MovieAdapterListener {
 
-    private RecyclerView listMovie;
+    private RecyclerView list;
     private View loading;
     private View viewError;
     private MainController mainController;
     private MovieAdapter movieAdapter;
+    private MovieModel model = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         setContentView(R.layout.activity_main);
         bindView();
         setupInstance();
-        if (savedInstanceState == null) initialize();
         setupView();
+        if (savedInstanceState == null) initialize();
     }
 
     @Override
@@ -48,15 +48,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelable("data", movieAdapter.getData());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        model = savedInstanceState.getParcelable("data");
+        if (model != null) {
+            setViewShow(true);
+            movieAdapter.setData(model);
+        }
     }
 
     private void bindView() {
-        listMovie = (RecyclerView) findViewById(R.id.list_movie);
+        list = (RecyclerView) findViewById(R.id.list_movie);
         loading = findViewById(R.id.loading);
         viewError = findViewById(R.id.container_error);
     }
@@ -72,21 +78,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     }
 
     private void setupView() {
-        listMovie.setLayoutManager(new LinearLayoutManager(this));
-        listMovie.setHasFixedSize(false);
-        listMovie.setAdapter(movieAdapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setHasFixedSize(false);
+        list.setAdapter(movieAdapter);
     }
 
     private void setViewShow(Boolean isShowList) {
-        listMovie.setVisibility(isShowList ? View.VISIBLE : View.GONE);
+        list.setVisibility(isShowList ? View.VISIBLE : View.GONE);
         loading.setVisibility(View.GONE);
         viewError.setVisibility(!isShowList ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void loadListMovieSuccess(List<MovieDetailModel> list) {
+    public void loadListMovieSuccess(MovieModel model) {
         setViewShow(true);
-        movieAdapter.setListMovie(list);
+        movieAdapter.setData(model);
     }
 
     @Override
