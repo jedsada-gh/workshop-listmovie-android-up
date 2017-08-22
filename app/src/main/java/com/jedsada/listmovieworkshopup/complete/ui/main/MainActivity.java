@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private View viewError;
     private MainController mainController;
     private MovieAdapter movieAdapter;
-    private MovieModel model = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        model = savedInstanceState.getParcelable("data");
+        MovieModel model = savedInstanceState.getParcelable("data");
         if (model != null) {
             setViewShow(true);
             movieAdapter.setData(model);
